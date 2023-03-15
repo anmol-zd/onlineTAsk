@@ -86,21 +86,15 @@ app.post('/book', (req, res) => {
     res.status(201).json(book);
 });
 
-// Endpoint to get all authors
-app.get('/author', (req, res) => {
-    logRequest(req);
 
-    const authorList = Object.values(authors);
-    res.json(authorList);
-});
+app.get('/author', (req, res) => {
+    res.json(authors);
+  });
 
 // Endpoint to get all books
 app.get('/book', (req, res) => {
-    logRequest(req);
-
-    const bookList = Object.values(books);
-    res.json(bookList);
-});
+    res.json(books);
+  });
 
 // Endpoint to get a single author and their books
 app.get('/author/:id', (req, res) => {
@@ -123,4 +117,10 @@ app.get('/book/:id', (req, res) => {
 
     const { id } = req.params;
     const book = books[id];
+})
+app.patch('/author/:id', (req, res) => {
+    const author = authors.find((author) => author.id == req.params.id);
+    if (!author) {
+      return res.status(404).json({ message: 'Author not found' });
+    }
 })
